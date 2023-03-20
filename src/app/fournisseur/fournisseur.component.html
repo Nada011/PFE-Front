@@ -1,0 +1,538 @@
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <div>
+        <button
+          type="button"
+          id="add-Floating-button"
+          (click)="onOpenModal(null, 'add')"
+          class="btn btn-danger btn-rounded btn-icon"
+        >
+          <i class="mdi mdi-plus"></i>
+        </button>
+        <!-- Add Modal -->
+        <div
+          class="modal fade"
+          id="add"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" style="margin-top: 10px">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <h4 class="card-title">Ajouter Fournisseur</h4>
+                <form [formGroup]="addForm" (ngSubmit)="onAdd(addForm)">
+                  <div class="form-group row">
+                    <label
+                      for="exampleInputUsername2"
+                      class="col-sm-3 col-form-label"
+                      >Nom</label
+                    >
+                    <div class="col-sm-9">
+                      <input
+                        type="text"
+                        formControlName="nom"
+                        class="form-control"
+                        id="exampleInputUsername2"
+                        placeholder="Nom..."
+                      />
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          addForm.controls['nom'].invalid &&
+                          addForm.controls['nom'].touched
+                        "
+                      >
+                        *saisir un nom!
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label
+                      for="exampleInputMobile"
+                      class="col-sm-3 col-form-label"
+                      >Email</label
+                    >
+                    <div class="col-sm-9">
+                      <input
+                        type="text"
+                        formControlName="email"
+                        class="form-control"
+                        id="exampleInputEmail2"
+                        placeholder="Email..."
+                      />
+                      <small
+                        class="text-danger"
+                        *ngIf="addForm.controls['email'].touched"
+                      >
+                        <small
+                          *ngIf="addForm.controls['email'].hasError('required')"
+                          >*saisir un email!</small
+                        >
+                        <small
+                          *ngIf="addForm.controls['email'].hasError('email')"
+                          >*Une adresse e-mail invalide!</small
+                        >
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label
+                      for="exampleInputEmail2"
+                      class="col-sm-3 col-form-label"
+                      >Num Tel</label
+                    >
+                    <div class="col-sm-9">
+                      <input
+                        type="text"
+                        formControlName="numTel"
+                        class="form-control"
+                        id="exampleInputEmail2"
+                        placeholder="Numero Tel..."
+                      />
+                      <small
+                        class="text-danger"
+                        *ngIf="addForm.controls['numTel'].touched"
+                      >
+                        <small
+                          *ngIf="
+                            addForm.controls['numTel'].hasError('required')
+                          "
+                          >*saisir numéro de téléphone!</small
+                        >
+                        <small
+                          *ngIf="
+                            addForm.controls['numTel'].hasError('patterns')
+                          "
+                          >* numéro de téléphone invalide!</small
+                        >
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label
+                      for="exampleInputPassword"
+                      class="col-sm-3 col-form-label"
+                      >Fax
+                    </label>
+                    <div class="col-sm-9">
+                      <input
+                        type="text"
+                        formControlName="fax"
+                        class="form-control"
+                        id="exampleInputEmail2"
+                        placeholder="Fax..."
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="exampleRole" class="col-sm-3 col-form-label"
+                      >Adresse</label
+                    >
+                    <div class="col-sm-9">
+                      <input
+                        type="text"
+                        formControlName="adresse"
+                        class="form-control"
+                        placeholder="Adresse..."
+                      />
+                      <small
+                        class="text-danger"
+                        *ngIf="addForm.controls['adresse'].touched"
+                      >
+                        <small
+                          *ngIf="
+                            addForm.controls['adresse'].hasError('required')
+                          "
+                          >*saisir adresse!</small
+                        >
+                        <small
+                          *ngIf="
+                            addForm.controls['adresse'].hasError('patterns') &&
+                            addForm.controls['adresse'].hasError('minLength')
+                          "
+                          >*invalide!</small
+                        >
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="exampleRole" class="col-sm-3 col-form-label"
+                      >Ville</label
+                    >
+                    <div class="col-sm-9">
+                      <input
+                        type="text"
+                        formControlName="ville"
+                        class="form-control"
+                        placeholder="Ville.."
+                      />
+                      <small
+                        class="text-danger"
+                        *ngIf="addForm.controls['ville'].touched"
+                      >
+                        <small
+                          *ngIf="addForm.controls['ville'].hasError('required')"
+                          >*saisir ville!</small
+                        >
+                        <small
+                          *ngIf="
+                            addForm.controls['ville'].hasError('patterns') &&
+                            addForm.controls['ville'].hasError('minLength')
+                          "
+                          >*invalide!</small
+                        >
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="exampleRole" class="col-sm-3 col-form-label"
+                      >Code postal</label
+                    >
+                    <div class="col-sm-9">
+                      <input
+                        type="text"
+                        formControlName="codePostal"
+                        class="form-control"
+                        placeholder="Code postal..."
+                      />
+                      <small
+                        class="text-danger"
+                        *ngIf="addForm.controls['adresse'].touched"
+                      >
+                        <small
+                          *ngIf="
+                            addForm.controls['codePostal'].hasError('required')
+                          "
+                          >*saisir code Postal!</small
+                        >
+                        <small
+                          *ngIf="
+                            addForm.controls['codePostal'].hasError(
+                              'patterns'
+                            ) &&
+                            addForm.controls['codePostal'].hasError('minLength')
+                          "
+                          >*code Postal invalide!</small
+                        >
+                      </small>
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      id="addUtilisateurForm"
+                      class="btn btn-light"
+                      data-dismiss="modal"
+                    >
+                      Annuler
+                    </button>
+                    <button
+                      [disabled]="addForm.invalid"
+                      type="submit"
+                      class="btn btn-dark"
+                      data-dismiss="modal"
+                    >
+                      Ajouter
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h4 class="card-title">FOURNISSEURS</h4>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Num Tel</th>
+              <th>Fax</th>
+              <th>Adresse</th>
+              <th>Ville</th>
+              <th>Code postal</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let fournisseur of fournisseurs">
+              <td>{{ fournisseur.nom }}</td>
+              <td>{{ fournisseur.email }}</td>
+              <td>{{ fournisseur.numTel }}</td>
+              <td>{{ fournisseur.fax }}</td>
+              <td>{{ fournisseur.adresse }}</td>
+              <td>{{ fournisseur.ville }}</td>
+              <td>{{ fournisseur.codePostal }}</td>
+              <td>
+                <button
+                  type="button"
+                  type="button"
+                  (click)="onOpenModal(fournisseur, 'edit')"
+                  class="btn btn-inverse-secondary btn-fw"
+                >
+                  <i class="mdi mdi-pencil"></i>
+                </button>
+                <!-- Edit Modal -->
+                <div
+                  class="modal fade"
+                  id="edit"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog" style="margin-top: 10px">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <h4 class="card-title">Modifier utilisateur</h4>
+                        <form #editForm="ngForm">
+                          <div class="form-group row">
+                            <label
+                              for="exampleInputUsername2"
+                              class="col-sm-3 col-form-label"
+                              >Nom</label
+                            >
+                            <div class="col-sm-9">
+                              <input
+                                ngModel="{{ editFournisseur?.nom }}"
+                                name="nom"
+                                type="text"
+                                class="form-control"
+                                id="exampleInputUsername2"
+                                placeholder="{{ editFournisseur?.nom }}"
+                              />
+                            </div>
+                            <input
+                              type="hidden"
+                              ngModel="{{ editFournisseur?.id }}"
+                              name="id"
+                              class="form-control"
+                              id="id"
+                            />
+                          </div>
+                          <div class="form-group row">
+                            <label
+                              for="exampleInputEmail2"
+                              class="col-sm-3 col-form-label"
+                              >Email</label
+                            >
+                            <div class="col-sm-9">
+                              <input
+                                ngModel="{{ editFournisseur?.email }}"
+                                name="email"
+                                type="text"
+                                class="form-control"
+                                id="exampleInputEmail2"
+                                placeholder="{{ editFournisseur?.email }}"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label
+                              for="exampleInputEmail2"
+                              class="col-sm-3 col-form-label"
+                              >Num Tel</label
+                            >
+                            <div class="col-sm-9">
+                              <input
+                                ngModel="{{ editFournisseur?.numTel }}"
+                                name="numTel"
+                                type="text"
+                                class="form-control"
+                                id="exampleInputEmail2"
+                                placeholder="{{ editFournisseur?.numTel }}"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label
+                              for="exampleInputEmail2"
+                              class="col-sm-3 col-form-label"
+                              >Fax</label
+                            >
+                            <div class="col-sm-9">
+                              <input
+                                ngModel="{{ editFournisseur?.fax }}"
+                                name="fax"
+                                type="text"
+                                class="form-control"
+                                id="exampleInputEmail2"
+                                placeholder="{{ editFournisseur?.fax }}"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label
+                              for="exampleInput"
+                              class="col-sm-3 col-form-label"
+                              >Adresse</label
+                            >
+                            <div class="col-sm-9">
+                              <input
+                                ngModel="{{ editFournisseur?.adresse }}"
+                                name="adresse"
+                                type="text"
+                                class="form-control"
+                                id="exampleInputEmail2"
+                                placeholder="{{ editFournisseur?.adresse }}"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label
+                              for="exampleInputPassword"
+                              class="col-sm-3 col-form-label"
+                              >Ville
+                            </label>
+                            <div class="col-sm-9">
+                              <input
+                                ngModel="{{ editFournisseur?.ville }}"
+                                name="ville"
+                                type="text"
+                                class="form-control"
+                                id="exampleInputEmail2"
+                                placeholder="{{ editFournisseur?.ville }}"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label
+                              for="exampleRole"
+                              class="col-sm-3 col-form-label"
+                              >Code postal</label
+                            >
+                            <div class="col-sm-9">
+                              <input
+                                ngModel="{{ editFournisseur?.codePostal }}"
+                                name="codePostal"
+                                type="text"
+                                class="form-control"
+                                placeholder="{{ editFournisseur?.codePostal }}"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="modal-footer">
+                            <button
+                              type="button"
+                              class="btn btn-light"
+                              data-dismiss="modal"
+                            >
+                              Annuler
+                            </button>
+                            <button
+                              (click)="onEdit(editForm.value)"
+                              type="button"
+                              class="btn btn-dark"
+                              data-dismiss="modal"
+                            >
+                              Enregistrer
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  (click)="onOpenModal(fournisseur, 'delete')"
+                  class="btn btn-inverse-secondary btn-fw"
+                >
+                  <i class="mdi mdi-delete"></i>
+                </button>
+                <!-- Delete Modal -->
+                <div
+                  class="modal fade"
+                  id="delete"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="deleteModelLabel"
+                  aria-hidden="true"
+                >
+                  <div
+                    class="modal-dialog"
+                    style="margin-top: 4px"
+                    role="document"
+                  >
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModelLabel">
+                          Supprimer Fournisseur
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>
+                          êtes-vous sûr de vouloir supprimer le fournisseur{{
+                            deleteFournisseur?.nom
+                          }}?
+                        </p>
+                        <div class="modal-footer">
+                          <button
+                            (click)="onDelete(deleteFournisseur!.id)"
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                          >
+                            Oui
+                          </button>
+                          <button class="btn btn-danger" data-dismiss="modal">
+                            Non
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Notification for no employees -->
+        <div
+          *ngIf="fournisseurs?.length == 0"
+          class="col-lg-12 col-md-12 col-xl-12"
+        >
+          <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">PAS DE FOURNISSEUR!</h4>
+            <p>No element were found.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
