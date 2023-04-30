@@ -1,7 +1,7 @@
-import { TypeRetardService } from './type-retard.service';
+import { TypeRetardService } from '../Services/type-retard.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TypeRetard } from './type-retard';
+import { TypeRetard } from '../Entities/type-retard';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

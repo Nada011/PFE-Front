@@ -1,7 +1,7 @@
-import { UtilisateurService } from './utilisateur/utilisateur.service';
+import { UtilisateurService } from './Services/utilisateur.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from  '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UtilisateurComponent } from './utilisateur/utilisateur.component';
 import { FournisseurComponent } from './fournisseur/fournisseur.component';
@@ -12,8 +12,11 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TypeRetardComponent } from './type-retard/type-retard.component';
-
-
+import { MenuComponent } from './menu/menu.component';
+import { ContratComponent } from './contrat/contrat.component';
+import { MenuDetailComponent } from './menu-detail/menu-detail.component';
+import { ContratDashboardComponent } from './contrat-dashboard/contrat-dashboard.component';
+import { UpdateContratComponent } from './update-contrat/update-contrat.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +27,21 @@ import { TypeRetardComponent } from './type-retard/type-retard.component';
     DashboardAdminComponent,
     SideBarComponent,
     NavBarComponent,
-    TypeRetardComponent
+    TypeRetardComponent,
+    MenuComponent,
+    ContratComponent,
+    MenuDetailComponent,
+    ContratDashboardComponent,
+    UpdateContratComponent,
   ],
   imports: [
-    BrowserModule,AppRoutingModule,
-    HttpClientModule, FormsModule,ReactiveFormsModule
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [UtilisateurService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

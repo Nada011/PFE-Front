@@ -1,0 +1,177 @@
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="chartjs-size-monitor">
+          <div class="chartjs-size-monitor-expand"><div class=""></div></div>
+          <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
+        </div>
+        <h1 class="card-title">Contrat</h1>
+        <hr />
+
+        <form [formGroup]="$any(details)" (ngSubmit)="onAdd(addForm)">
+          <div class="form-group row">
+            <div class="col">
+              <label for="type">Date debut </label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="{{ Contrat.dateDebut }}"
+                [disabled]="true"
+              />
+            </div>
+
+            <div class="col">
+              <label for="type">Date fin </label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="{{ Contrat.dateFin }}"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="type">Fournisseur </label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="{{ Contrat.fournisseurNom }}"
+              [disabled]="true"
+            />
+          </div>
+          <div class="form-group">
+            <h3>Menu</h3>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="{{ Contrat.menu.titre }}"
+              [disabled]="true"
+            />
+          </div>
+          <h1 class="card-title text-danger">
+            Articles
+
+            <button
+              (click)="onOpenModal(null, 'ArticleList')"
+              type="button"
+              class="btn btn-inverse-secondary btn-fw"
+            >
+              <i class="mdi mdi-plus"></i>
+            </button>
+          </h1>
+          <!-- Article list -->
+          <div
+            class="modal fade"
+            id="ArticleList"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="ArticleListModelLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" style="margin-top: 4px" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModelLabel">
+                    Liste des articles
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tbody>
+                        <tr *ngFor="let article of Articles">
+                          <td>{{ article.nomArticleFr }}</td>
+                          <td>{{ article.nomArticleEn }}</td>
+                          <td>{{ article.nomArticleAr }}</td>
+
+                          <td>
+                            <button
+                              type="button"
+                              type="button"
+                              (click)="addMenuDetail(article)"
+                              class="btn btn-inverse-secondary btn-fw"
+                            >
+                              <i class="mdi mdi-plus"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-danger" data-dismiss="modal">
+                      Quitter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-container
+            *ngFor="let MenuForm of details.controls; let i = index"
+          >
+            <div class="form-group row" [formGroupName]="i">
+              <h6 class="text-secondary" for="">Article {{ i + 1 }}</h6>
+              <div
+                class="form-group"
+                style="
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                  padding-right: 20%;
+                "
+              >
+                <div>
+                  <ul class="list-ticked">
+                    <li>
+                      <button
+                        type="button"
+                        (click)="deleteMenuDetail(i)"
+                        class="btn btn-inverse-secondary btn-fw"
+                      >
+                        <i class="mdi mdi-delete"></i>
+                      </button>
+                      {{ listArticle[i].nomArticleFr }} ({{
+                        listArticle[i].nomArticleAr
+                      }},{{ listArticle[i].nomArticleEn }})
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    formControlName="prix"
+                    class="form-control"
+                    placeholder="Prix ..."
+                  />
+                </div>
+              </div></div
+          ></ng-container>
+
+          <div class="table-responsive">
+            <table class="table">
+              <tbody></tbody>
+            </table>
+          </div>
+          <button
+            style="margin-left: 76%"
+            [disabled]="addForm.invalid"
+            type="submit"
+            class="btn btn-dark"
+          >
+            Ajouter
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

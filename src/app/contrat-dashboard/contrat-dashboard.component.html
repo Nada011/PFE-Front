@@ -1,0 +1,326 @@
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <div>
+        <button
+          type="button"
+          id="add-Floating-button"
+          (click)="redirectTo('addContrat', null)"
+          class="btn btn-danger btn-rounded btn-icon"
+        >
+          <i class="mdi mdi-plus"></i>
+        </button>
+      </div>
+      <h4 class="card-title">CONTRATS</h4>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Date debut</th>
+              <th>Date fin</th>
+              <th>fournisseur</th>
+              <th>Menu</th>
+              <th style="padding-left: 20px">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let contrat of contrats">
+              <td>{{ contrat?.id }}</td>
+              <td>{{ contrat?.dateDebut }}</td>
+              <td>{{ contrat?.dateFin }}</td>
+              <td>{{ contrat?.fournisseurNom }}</td>
+              <td>{{ contrat?.menu.titre }}</td>
+
+              <td>
+                <button
+                  type="button"
+                  (click)="onOpenModal(contrat, 'edit')"
+                  class="btn btn-inverse-secondary btn-fw"
+                >
+                  <i class="mdi mdi-pencil"></i>
+                </button>
+
+                <!-- Edit Modal -->
+                <div
+                  class="modal fade"
+                  id="edit"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog" style="margin-top: 10px">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <h4 class="card-title">MODIFIER</h4>
+                        <form #editForm="ngForm">
+                          <div class="form-group row">
+                            <div class="col">
+                              <label for="type">Date debut </label>
+                              <input
+                                type="text"
+                                ngModel="{{ editContrat?.dateDebut }}"
+                                placeholder="{{ editContrat?.dateDebut }}"
+                                name="dateDebut"
+                                class="form-control"
+                              />
+                            </div>
+                            <input
+                              type="hidden"
+                              ngModel="{{ editContrat?.id }}"
+                              name="id"
+                              class="form-control"
+                              id="id"
+                            />
+
+                            <div class="col">
+                              <label for="type">Date fin </label>
+                              <input
+                                type="text"
+                                ngModel="{{ editContrat?.dateFin }}"
+                                placeholder="{{ editContrat?.dateFin }}"
+                                name="dateFin"
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col">
+                              <label for="type">Fournisseur </label>
+                              <select
+                                type="date"
+                                ngModelGroup="fournisseur"
+                                name="id"
+                                [ngModel]="editContrat?.fournisseurId"
+                                class="form-control"
+                              >
+                                <option [value]="editContrat?.fournisseurId">
+                                  {{ editContrat?.fournisseurNom }}
+                                </option>
+
+                                <option
+                                  ngIf="{{ fournisseur?.nom }}!={{
+                                    editContrat?.fournisseurNom
+                                  }}"
+                                  *ngFor="let fournisseur of Fournisseurs"
+                                  [value]="fournisseur"
+                                >
+                                  {{ fournisseur.nom }}
+                                </option>
+                              </select>
+                            </div>
+                            <div class="col">
+                              <label for="type">Menu titre </label>
+                              <input
+                                ngModelGroup="menu"
+                                name="titre"
+                                type="text"
+                                ngModel="{{ editContrat?.menu.titre }}"
+                                placeholder="{{ editContrat?.menu.titre }}"
+                                class="form-control"
+                              />
+                              <input
+                                type="hidden"
+                                ngModelGroup="menu"
+                                ngModel="{{ editContrat?.menu.id }}"
+                                name="id"
+                                class="form-control"
+                                id="id"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="modal-footer">
+                            <button
+                              type="button"
+                              class="btn btn-light"
+                              data-dismiss="modal"
+                            >
+                              Annuler
+                            </button>
+                            <button
+                              (click)="onEdit(editForm.value)"
+                              type="button"
+                              class="btn btn-dark"
+                              data-dismiss="modal"
+                            >
+                              Enregistrer
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  (click)="onOpenModal(contrat, 'delete')"
+                  class="btn btn-inverse-secondary btn-fw"
+                >
+                  <i class="mdi mdi-delete"></i>
+                </button>
+                <!-- Delete  Contrat Modal -->
+                <div
+                  class="modal fade"
+                  id="delete"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="deleteModelLabel"
+                  aria-hidden="true"
+                >
+                  <div
+                    class="modal-dialog"
+                    style="margin-top: 4px"
+                    role="document"
+                  >
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModelLabel">
+                          Supprimer Contrat
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>
+                          êtes-vous sûr de vouloir supprimer Contrat id
+                          {{ deleteContrat?.id }}
+                          ?
+                        </p>
+                        <div class="modal-footer">
+                          <button
+                            (click)="onDelete(deleteContrat!.id)"
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                          >
+                            Oui
+                          </button>
+                          <button class="btn btn-danger" data-dismiss="modal">
+                            Non
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  (click)="onOpenModal(contrat, 'ContrtatDetails')"
+                  class="btn btn-inverse-secondary btn-fw"
+                >
+                  <i class="mdi mdi-clipboard-text"></i>
+                </button>
+                <!-- Contrat details -->
+                <div
+                  class="modal fade"
+                  id="ContrtatDetails"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-hidden="true"
+                >
+                  <div
+                    class="modal-dialog"
+                    style="margin-top: 4px"
+                    role="document"
+                  >
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Contrat Détails</h5>
+                        <button
+                          type="button"
+                          (click)="
+                            redirectTo('updateMenuDetail', Contratt?.menu)
+                          "
+                          class="btn btn-inverse-secondary btn-fw"
+                        >
+                          <i class="mdi mdi-pencil"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <h6>
+                              Menu:
+
+                              {{ Contratt?.menu?.titre }}
+                            </h6>
+                            <tbody>
+                              <tr
+                                *ngFor="let details of Contratt?.menu?.details"
+                              >
+                                <td>
+                                  <div
+                                    style="
+                                      display: flex;
+                                      flex-direction: row;
+                                      justify-content: space-between;
+                                    "
+                                  >
+                                    <div>
+                                      {{ details?.nomArticleFr }}
+                                      <small class="text-muted">
+                                        &#40;
+                                        {{ details?.nomArticleAr }},
+                                        {{ details?.nomArticleEn }}&#41;
+                                      </small>
+                                    </div>
+                                    <div>{{ details?.prix }}DT</div>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            id="Quitter"
+                            class="btn btn-danger"
+                            data-dismiss="modal"
+                          >
+                            Quitter
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Notification for no contrats -->
+        <div *ngIf="contrats.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+          <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">PAS DE CONTRAT!</h4>
+            <p>No element were found.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

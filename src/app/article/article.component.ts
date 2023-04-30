@@ -1,6 +1,6 @@
-import { ArticleService } from './article.service';
+import { ArticleService } from '../Services/article.service';
 import { Component, OnInit } from '@angular/core';
-import { Article } from './article';
+import { Article } from '../Entities/article';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 

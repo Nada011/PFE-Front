@@ -267,7 +267,7 @@
               <th>Adresse</th>
               <th>Ville</th>
               <th>Code postal</th>
-              <th>Actions</th>
+              <th style="padding-left: 20px">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -281,7 +281,6 @@
               <td>{{ fournisseur.codePostal }}</td>
               <td>
                 <button
-                  type="button"
                   type="button"
                   (click)="onOpenModal(fournisseur, 'edit')"
                   class="btn btn-inverse-secondary btn-fw"
@@ -522,7 +521,7 @@
             </tr>
           </tbody>
         </table>
-        <!-- Notification for no employees -->
+        <!-- Notification for no fournisseur -->
         <div
           *ngIf="fournisseurs?.length == 0"
           class="col-lg-12 col-md-12 col-xl-12"

@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="chartjs-size-monitor">
+          <div class="chartjs-size-monitor-expand"><div class=""></div></div>
+          <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
+        </div>
+        <p class="card-title">Ajouter un Contrat</p>
+        <hr />
+
+        <form [formGroup]="addForm" (ngSubmit)="onAdd(addForm)">
+          <div class="form-group row">
+            <div class="col">
+              <label for="type">Date debut </label>
+              <input
+                type="date"
+                formControlName="dateDebut"
+                class="form-control"
+              />
+              <small
+                class="text-danger"
+                *ngIf="
+                  addForm.controls['dateDebut'].invalid &&
+                  addForm.controls['dateDebut'].touched
+                "
+              >
+                *saisir date debut!
+              </small>
+            </div>
+
+            <div class="col">
+              <label for="type">Date fin </label>
+              <input
+                type="date"
+                formControlName="dateFin"
+                class="form-control"
+              />
+              <small
+                class="text-danger"
+                *ngIf="
+                  addForm.controls['dateFin'].invalid &&
+                  addForm.controls['dateFin'].touched
+                "
+              >
+                *saisir date fin!
+              </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="type">Fournisseur </label>
+            <select
+              type="date"
+              formControlName="fournisseur"
+              class="form-control"
+            >
+              <option value="">...</option>
+              <option
+                *ngFor="let fournisseur of Fournisseurs"
+                [ngValue]="fournisseur"
+              >
+                {{ fournisseur.nom }}
+              </option>
+              <small
+                class="text-danger"
+                *ngIf="
+                  addForm.controls['fournisseur'].invalid &&
+                  addForm.controls['fournisseur'].touched
+                "
+              >
+                *saisir date fin!
+              </small>
+            </select>
+          </div>
+          <div class="form-group" formGroupName="menu">
+            <h3>Menu</h3>
+            <input
+              type="text"
+              formControlName="titre"
+              class="form-control"
+              placeholder="Titre menu ..."
+            />
+          </div>
+
+          <button
+            style="margin-left: 76%"
+            [disabled]="addForm.invalid"
+            type="submit"
+            class="btn btn-dark"
+          >
+            VALIDER <i class="mdi mdi-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -166,7 +166,6 @@
               <td>{{ article.nomArticleFr }}</td>
               <td>{{ article.nomArticleEn }}</td>
               <td>{{ article.nomArticleAr }}</td>
-              <td>{{ article.description }}</td>
               <td>
                 <button
                   type="button"
@@ -256,23 +255,7 @@
                               />
                             </div>
                           </div>
-                          <div class="form-group row">
-                            <label
-                              for="exampleInputMobile"
-                              class="col-sm-3 col-form-label"
-                              >Description</label
-                            >
-                            <div class="col-sm-9">
-                              <input
-                                type="text"
-                                ngModel="{{ editArticle?.description }}"
-                                name="description"
-                                class="form-control"
-                                id="exampleInputEmail2"
-                                placeholder="{{ editArticle?.description }}"
-                              />
-                            </div>
-                          </div>
+
                           <div class="modal-footer">
                             <button
                               type="button"
