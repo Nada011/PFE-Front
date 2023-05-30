@@ -4,4 +4,5 @@ export interface Menu {
   id: number;
   titre: String;
   details: any[];
+  total: number;
 }

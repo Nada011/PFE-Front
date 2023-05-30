@@ -88,6 +88,8 @@ export class FournisseurComponent implements OnInit {
     this.FournisseurService.createFournisseur(addForm.value).subscribe(
       (response: Fournisseur) => {
         console.log(response);
+        const exit = document.getElementById('exit');
+        exit?.click();
         this.getAllFournisseurs();
         addForm.reset();
       },

@@ -1,7 +1,7 @@
 import { UtilisateurService } from './Services/utilisateur.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UtilisateurComponent } from './utilisateur/utilisateur.component';
 import { FournisseurComponent } from './fournisseur/fournisseur.component';
@@ -17,6 +17,17 @@ import { ContratComponent } from './contrat/contrat.component';
 import { MenuDetailComponent } from './menu-detail/menu-detail.component';
 import { ContratDashboardComponent } from './contrat-dashboard/contrat-dashboard.component';
 import { UpdateContratComponent } from './update-contrat/update-contrat.component';
+import { AffichageVolComponent } from './affichage-vol/affichage-vol.component';
+import { AddRetardComponent } from './add-retard/add-retard.component';
+import { DashboardRetardComponent } from './dashboard-retard/dashboard-retard.component';
+import { LoginComponent } from './Auth/login/login.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { AuthGuard } from './Auth/auth.guard';
+import { AuthInterceptor } from './Auth/auth.iterceptor';
+import { ProfilComponent } from './profil/profil.component';
+import { RoleComponent } from './role/role.component';
+import { NgxPrintModule } from 'ngx-print';
+import { BonPrestationComponent } from './bon-prestation/bon-prestation.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +44,14 @@ import { UpdateContratComponent } from './update-contrat/update-contrat.componen
     MenuDetailComponent,
     ContratDashboardComponent,
     UpdateContratComponent,
+    AffichageVolComponent,
+    AddRetardComponent,
+    DashboardRetardComponent,
+    LoginComponent,
+    ForbiddenComponent,
+    ProfilComponent,
+    RoleComponent,
+    BonPrestationComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,8 +59,17 @@ import { UpdateContratComponent } from './update-contrat/update-contrat.componen
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPrintModule,
   ],
-  providers: [UtilisateurService],
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    UtilisateurService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

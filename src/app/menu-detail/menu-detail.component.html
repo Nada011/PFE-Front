@@ -88,14 +88,17 @@
                   <div class="table-responsive">
                     <table class="table">
                       <tbody>
-                        <tr *ngFor="let article of Articles">
+                        <tr
+                          id="{{ article.id }}"
+                          *ngFor="let article of Articles"
+                        >
                           <td>{{ article.nomArticleFr }}</td>
                           <td>{{ article.nomArticleEn }}</td>
                           <td>{{ article.nomArticleAr }}</td>
 
                           <td>
                             <button
-                              type="button"
+                              *ngIf="test(article.id) === false"
                               type="button"
                               (click)="addMenuDetail(article)"
                               class="btn btn-inverse-secondary btn-fw"

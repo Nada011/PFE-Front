@@ -8,4 +8,5 @@ export interface Contrat {
   dateFin: Date;
   menu: Menu;
   fournisseur: Fournisseur;
+  fournisseurNom: String;
 }

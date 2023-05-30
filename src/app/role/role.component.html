@@ -1,0 +1,136 @@
+<div class="row">
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="chartjs-size-monitor">
+          <div class="chartjs-size-monitor-expand"><div class=""></div></div>
+          <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
+        </div>
+        <p class="card-title">Ajouter un Role</p>
+
+        <form [formGroup]="addForm" (ngSubmit)="onAdd(addForm)">
+          <div class="form-group">
+            <label for="type">Role </label>
+            <input
+              type="text"
+              formControlName="roleName"
+              class="form-control"
+              id="exampleInputUsername2"
+              placeholder="role..."
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                addForm.controls['roleName'].invalid &&
+                addForm.controls['roleName'].touched
+              "
+            >
+              *saisir un nom !
+            </small>
+          </div>
+          <div class="form-group">
+            <label for="type">Description role </label>
+            <input
+              type="text"
+              formControlName="roleDescription"
+              class="form-control"
+              id="exampleInputUsername2"
+              placeholder="Description..."
+            />
+          </div>
+          <button
+            style="margin-left: 76%"
+            [disabled]="addForm.invalid"
+            type="submit"
+            class="btn btn-dark"
+          >
+            Ajouter
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <p class="card-title">Roles</p>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th style="padding-left: 20%">Actions</th>
+              </tr>
+            </thead>
+            <tr *ngFor="let role of Roles">
+              <td>{{ role?.roleName }}</td>
+              <td>{{ role?.roleDescription }}</td>
+              <td style="padding-left: 18%">
+                <button
+                  type="button"
+                  (click)="onOpenModal(role, 'delete')"
+                  class="btn btn-inverse-secondary btn-fw"
+                >
+                  <i class="mdi mdi-delete"></i>
+                </button>
+                <!-- Delete Modal -->
+                <div
+                  class="modal fade"
+                  id="delete"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="deleteModelLabel"
+                  aria-hidden="true"
+                >
+                  <div
+                    class="modal-dialog"
+                    style="margin-top: 4px"
+                    role="document"
+                  >
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModelLabel">
+                          Supprimer Role
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>
+                          êtes-vous sûr de vouloir supprimer le role :
+                          {{ deleteRole?.roleName }}
+                          ?
+                        </p>
+                        <div class="modal-footer">
+                          <button
+                            (click)="onDelete(deleteRole!.roleName)"
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                          >
+                            Oui
+                          </button>
+                          <button class="btn btn-danger" data-dismiss="modal">
+                            Non
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

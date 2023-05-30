@@ -49,13 +49,17 @@
                   <div class="table-responsive">
                     <table class="table">
                       <tbody>
-                        <tr *ngFor="let article of Articles">
+                        <tr
+                          id="{{ article.id }}"
+                          *ngFor="let article of Articles"
+                        >
                           <td>{{ article.nomArticleFr }}</td>
                           <td>{{ article.nomArticleEn }}</td>
                           <td>{{ article.nomArticleAr }}</td>
 
                           <td>
                             <button
+                              *ngIf="test(article.id) === false"
                               type="button"
                               type="button"
                               (click)="addMenuDetail(article)"
@@ -223,14 +227,7 @@
                                 class="form-control"
                                 id="id"
                               />
-                              <input
-                                type="hidden"
-                                ngModelGroup="menu"
-                                ngModel="{{ editdetailMenu?.idMenu }}"
-                                name="id"
-                                class="form-control"
-                                id="id"
-                              />
+
                               <input
                                 type="hidden"
                                 ngModelGroup="article"

@@ -44,7 +44,8 @@ export class ArticleComponent implements OnInit {
   public onAdd(addForm: FormGroup): void {
     this.ArticleService.createArticle(addForm.value).subscribe(
       (response: Article) => {
-        console.log(response);
+        const exit = document.getElementById('exit');
+        exit?.click();
         this.getAllArticles();
         addForm.reset();
       },

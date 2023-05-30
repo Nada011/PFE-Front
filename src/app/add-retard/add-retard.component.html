@@ -1,0 +1,194 @@
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="chartjs-size-monitor">
+          <div class="chartjs-size-monitor-expand"><div class=""></div></div>
+          <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
+        </div>
+        <p class="card-title">Déclancher un retard</p>
+        <hr />
+
+        <form [formGroup]="addForm" (ngSubmit)="onAdd(addForm)">
+          <div class="form-group">
+            <label for="type">Type de retard </label>
+            <select
+              type="date"
+              formControlName="typeRetard"
+              class="form-control"
+            >
+              <option value="">...</option>
+              <option *ngFor="let type of typeRetard" [ngValue]="type">
+                {{ type?.type }}
+              </option>
+              <small
+                class="text-danger"
+                *ngIf="
+                  addForm.controls['typeRetard'].invalid &&
+                  addForm.controls['typeRetard'].touched
+                "
+              >
+                *saisir type de retard !
+              </small>
+            </select>
+          </div>
+
+          <h3 class="card-title text-danger">
+            Choisir un contrat
+
+            <button
+              (click)="onOpenModal(null, 'listContrats')"
+              type="button"
+              class="btn btn-inverse-secondary btn-fw"
+            >
+              <i class="mdi mdi-plus"></i>
+            </button>
+          </h3>
+          <!-- Article list -->
+          <div
+            class="modal fade"
+            id="listContrats"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="ArticleListModelLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" style="margin-top: 4px" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModelLabel">
+                    Liste des contrats
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div
+                    class="input-group"
+                    style="width: 350px; margin-left: 10%; margin-bottom: 20px"
+                  >
+                    <input
+                      type="text"
+                      class="form-control"
+                      #x
+                      (keyup)="setFilterText(x.value)"
+                      placeholder="Rechecher par fournisseur..."
+                      aria-label="Recipient's username"
+                    />
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <th>#</th>
+                      <th>Fournisseur</th>
+                      <th>Menu</th>
+                      <th></th>
+
+                      <tbody>
+                        <tr *ngFor="let contrat of filtredContrats">
+                          <td>{{ contrat?.id }}</td>
+                          <td>{{ contrat?.fournisseurNom }}</td>
+                          <td>
+                            {{ contrat?.menu.titre }}:
+                            <div>
+                              <ul
+                                *ngFor="let details of contrat?.menu?.details"
+                              >
+                                <li>
+                                  <div>
+                                    {{ details?.nomArticleFr }}
+                                    <small class="text-muted">
+                                      &#40;
+                                      {{ details?.nomArticleAr }},
+                                      {{ details?.nomArticleEn }}&#41;
+                                    </small>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+
+                          <td>
+                            <button
+                              type="button"
+                              type="button"
+                              (click)="setContrat(contrat)"
+                              class="btn btn-inverse-secondary btn-fw"
+                            >
+                              <i class="mdi mdi-plus"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-danger" data-dismiss="modal">
+                      Quitter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive" *ngIf="contratt != null">
+            <table class="table">
+              <th>#</th>
+              <th>Fournisseur</th>
+              <th>Menu</th>
+              <th></th>
+
+              <tbody>
+                <tr>
+                  <td>{{ contratt.id }}</td>
+                  <td>{{ contratt.fournisseurNom }}</td>
+                  <td>
+                    {{ contratt.menu.titre }}:
+                    <div>
+                      <ul *ngFor="let details of contratt?.menu?.details">
+                        <li>
+                          <div>
+                            {{ details?.nomArticleFr }}
+                            <small class="text-muted">
+                              &#40;
+                              {{ details?.nomArticleAr }},
+                              {{ details?.nomArticleEn }}&#41;
+                            </small>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+
+                  <td>
+                    <button
+                      type="button"
+                      type="button"
+                      (click)="deleteContrtat()"
+                      class="btn btn-inverse-secondary btn-fw"
+                    >
+                      <i class="mdi mdi-delete"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button
+            style="margin-left: 76%"
+            [disabled]="addForm.invalid"
+            type="submit"
+            class="btn btn-dark"
+          >
+            DECLANCER
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

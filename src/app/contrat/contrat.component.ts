@@ -64,7 +64,6 @@ export class ContratComponent implements OnInit {
     this.ContratService.getAllContrats().subscribe(
       (response: Contrat[]) => {
         this.contrats = response;
-        console.log(this.contrats);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -101,7 +100,6 @@ export class ContratComponent implements OnInit {
     this.FournisseurService.getAllFournisseurs().subscribe(
       (response: Fournisseur[]) => {
         this.Fournisseurs = response;
-        console.log(this.Fournisseurs);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -125,7 +123,6 @@ export class ContratComponent implements OnInit {
     this.MenuService.getAllMenu().subscribe(
       (response: Menu[]) => {
         this.Menus = response;
-        console.log(this.Menus);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -140,29 +137,21 @@ export class ContratComponent implements OnInit {
   //delete article from list
   public deleteFromList(i: number): void {
     this.listArticle.splice(i, 1);
-    console.log(i);
-    console.log(this.listArticle);
   }
 
   public onAdd(addForm: FormGroup): void {
-    console.log('*********');
-    console.log(this.addForm.value);
-    console.log('*********');
-
+    console.log(addForm.value);
     this.ContratService.createContrat(addForm.value).subscribe(
       (response: Contrat) => {
-        console.log(response);
-
         this.getAllContrats();
         this.listArticle = [];
         addForm.reset();
         sessionStorage.setItem('contrat', JSON.stringify(response));
-        this.router.navigate(['/menuDetail']);
+        this.router.navigate(['AdminDashboard/menuDetail']);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
 
-        console.log(this.addForm.value);
         //addForm.reset();
       }
     );
@@ -171,7 +160,6 @@ export class ContratComponent implements OnInit {
   public onEdit(Contrat: Contrat): void {
     this.ContratService.updateContrat(Contrat).subscribe(
       (response: Contrat) => {
-        console.log(response);
         this.getAllContrats();
       },
       (error: HttpErrorResponse) => {

@@ -24,6 +24,7 @@
                 <button
                   type="button"
                   class="close"
+                  id="exit"
                   data-dismiss="modal"
                   aria-label="Close"
                 >
@@ -140,14 +141,8 @@
                     <div class="col-sm-9">
                       <select class="form-control" formControlName="role" id="">
                         <option value="">...</option>
-                        <option value="Admin">Admin</option>
-                        <option value="Chef d'escale">Chef d'escale</option>
-                        <option value="Agent de comptoir">
-                          Agent de comptoir
-                        </option>
-                        <option value="Financier">Financier</option>
-                        <option value="Direction générale">
-                          Direction générale
+                        <option *ngFor="let role of roles" [ngValue]="role">
+                          {{ role.roleName }}
                         </option>
                       </select>
                       <small
@@ -174,7 +169,6 @@
                       [disabled]="addForm.invalid"
                       type="submit"
                       class="btn btn-dark"
-                      data-dismiss="modal"
                     >
                       Ajouter
                     </button>
@@ -341,18 +335,13 @@
                                 name="role"
                               >
                                 <option disabled value="">
-                                  {{ editUtilisateur?.role }}
+                                  {{ editUtilisateur?.role?.roleName }}
                                 </option>
-                                <option value="Admin">Admin</option>
-                                <option value="Chef d'escale">
-                                  Chef d'escale
-                                </option>
-                                <option value="Agent de comptoir">
-                                  Agent de comptoir
-                                </option>
-                                <option value="Financier">Financier</option>
-                                <option value="Direction générale">
-                                  Direction générale
+                                <option
+                                  *ngFor="let role of roles"
+                                  [ngValue]="role"
+                                >
+                                  {{ role.roleName }}
                                 </option>
                               </select>
                             </div>

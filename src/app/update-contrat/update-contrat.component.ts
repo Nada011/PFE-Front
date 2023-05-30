@@ -18,7 +18,7 @@ import { ArticleService } from '../Services/article.service';
   styleUrls: ['./update-contrat.component.css'],
 })
 export class UpdateContratComponent implements OnInit {
-  public Menu: any = JSON.parse(sessionStorage.getItem('Menu') || '{}');
+  public Menu: Menu = JSON.parse(sessionStorage.getItem('Menu') || '{}');
   public Articles: Article[];
   public listArticle: any[];
   MenuDetails: any[];
@@ -44,6 +44,7 @@ export class UpdateContratComponent implements OnInit {
   ngOnInit() {
     this.getAllArticles();
     this.getDetailMenu();
+
     this.addForm = this.fb.group({
       details: this.fb.array([]),
     });
@@ -52,6 +53,32 @@ export class UpdateContratComponent implements OnInit {
   // GET DETAILS CONTROLS
   get details() {
     return this.addForm.get('details') as FormArray;
+  }
+  // test
+  test(id: number): Boolean {
+    const tr = document.getElementById(id.toString());
+    tr!.style.backgroundColor = '	white';
+    let test = false;
+    if (this.MenuDetails != undefined) {
+      this.MenuDetails.forEach((element) => {
+        if (element.idArticle === id) {
+          test = true;
+
+          tr!.style.backgroundColor = '	#f8f8ff';
+        }
+        if (test === false) tr!.style.backgroundColor = '	white';
+      });
+    }
+    this.listArticle.forEach((element) => {
+      if (element.id === id) {
+        test = true;
+
+        tr!.style.backgroundColor = '	#f8f8ff';
+      }
+      if (test === false) tr!.style.backgroundColor = '	white';
+    });
+
+    return test;
   }
 
   //add menu details
@@ -74,6 +101,8 @@ export class UpdateContratComponent implements OnInit {
   }
   //Edit
   public onEdit(detail: MenuDetail): void {
+    console.log('yoooo', detail);
+    detail.menu = this.Menu;
     this.MenuDetailService.updateDetailMenu(detail).subscribe(
       (response: MenuDetail) => {
         console.log(response);
@@ -109,16 +138,15 @@ export class UpdateContratComponent implements OnInit {
       }
     );
   }
+
   // GET Menu details
   public getDetailMenu(): void {
     this.MenuDetailService.getDetailMenu(this.Menu.id).subscribe(
       (response: MenuDetail[]) => {
         this.MenuDetails = response;
-        console.log(this.MenuDetails);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
-        console.log(this.Menu.id);
       }
     );
   }

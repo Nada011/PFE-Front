@@ -42,9 +42,8 @@ export class MenuDetailComponent implements OnInit {
   // NgOnInit
   ngOnInit() {
     this.getAllArticles();
-    this.getAllFournisseurs();
     //this.f = this.route.snapshot.params;
-    console.log(this.Contrat);
+
     this.addForm = this.fb.group({
       details: this.fb.array([]),
     });
@@ -72,17 +71,23 @@ export class MenuDetailComponent implements OnInit {
     this.details.removeAt(ArticleIndex);
     this.deleteFromList(ArticleIndex);
   }
-  // GET FOURNISSEURS
-  public getAllFournisseurs(): void {
-    //this.FournisseurService.getAllFournisseurs().subscribe(
-    //(response: Fournisseur[]) => {
-    //  this.Fournisseurs = response;
-    //console.log(this.Fournisseurs);
-    // },
-    (error: HttpErrorResponse) => {
-      alert(error.message);
-    };
-    //);
+  // test
+  test(id: number): Boolean {
+    const tr = document.getElementById(id.toString());
+    tr!.style.backgroundColor = '	white';
+    let test = false;
+    console.log(this.listArticle);
+
+    this.listArticle.forEach((element) => {
+      if (element.id === id) {
+        test = true;
+
+        tr!.style.backgroundColor = '	#f8f8ff';
+      }
+      if (test === false) tr!.style.backgroundColor = '	white';
+    });
+
+    return test;
   }
   //GET ARTICLES
   public getAllArticles(): void {
@@ -116,7 +121,7 @@ export class MenuDetailComponent implements OnInit {
         console.log(response);
         this.listArticle = [];
         addForm.reset();
-        this.router.navigate(['/ContratDashboard']);
+        this.router.navigate(['AdminDashboard/ContratDashboard']);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

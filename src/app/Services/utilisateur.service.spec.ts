@@ -1,4 +1,4 @@
-import { Utilisateur } from './../utilisateur/utilisateur';
+import { Utilisateur } from '../Entities/utilisateur';
 import { TestBed } from '@angular/core/testing';
 
 import { UtilisateurService } from './utilisateur.service';

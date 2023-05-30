@@ -48,13 +48,13 @@ export class ContratDashboardComponent implements OnInit {
   // redirect to page contrat to add contrat
   redirectTo(page: String, object: any) {
     if (page == 'addContrat') {
-      this.router.navigate(['/contrat']);
+      this.router.navigate(['AdminDashboard/contrat']);
     }
     if (page == 'updateMenuDetail') {
       sessionStorage.setItem('Menu', JSON.stringify(object));
       const button = document.getElementById('Quitter');
       button?.click();
-      this.router.navigate(['/updateContrat']);
+      this.router.navigate(['AdminDashboard/updateContrat']);
     }
   }
   // GET FOURNISSEURS

@@ -1,0 +1,79 @@
+<div class="container-scroller">
+  <div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="content-wrapper d-flex align-items-center auth px-0">
+      <div class="row w-100 mx-0">
+        <div class="col-lg-4 mx-auto">
+          <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+            <div class="brand-logo">
+              <img
+                src="../../assets/images/logoTn.png"
+                style="margin-left: 20%"
+                alt="logo"
+              />
+            </div>
+            <h4>Bienvenue!</h4>
+            <h6 class="font-weight-light">Connectez-vous pour continuer.</h6>
+            <form
+              [formGroup]="Auth"
+              (ngSubmit)="Authenticate(Auth)"
+              class="pt-3"
+            >
+              <div class="form-group">
+                <input
+                  type="email"
+                  formControlName="email"
+                  class="form-control form-control-lg"
+                  id="exampleInputEmail1"
+                  placeholder="Email..."
+                />
+                <small
+                  class="text-danger"
+                  *ngIf="Auth.controls['email'].touched"
+                >
+                  <small *ngIf="Auth.controls['email'].hasError('required')"
+                    >*saisir un email!</small
+                  >
+                  <small *ngIf="Auth.controls['email'].hasError('email')"
+                    >*Une adresse e-mail invalide!</small
+                  >
+                </small>
+              </div>
+              <div class="form-group">
+                <input
+                  type="password"
+                  formControlName="motPasse"
+                  class="form-control form-control-lg"
+                  id="exampleInputPassword1"
+                  placeholder="Mot de passe..."
+                />
+                <small
+                  class="text-danger"
+                  *ngIf="
+                    Auth.controls['motPasse'].invalid &&
+                    Auth.controls['motPasse'].touched
+                  "
+                >
+                  *saisir mot passe!
+                </small>
+              </div>
+              <button
+                [disabled]="Auth.invalid"
+                type="submit"
+                class="btn btn-primary btn-md btn-block"
+                style="background-color: #960707; border-color: #960707"
+              >
+                CONNECTER
+              </button>
+
+              <div
+                class="my-2 d-flex justify-content-between align-items-center"
+              ></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- content-wrapper ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>

@@ -4,18 +4,6 @@
       <a
         class="nav-link"
         data-toggle="collapse"
-        href="#auth"
-        aria-expanded="false"
-        aria-controls="auth"
-      >
-        <i class="icon-head menu-icon"></i>
-        <span class="menu-title">Profil</span>
-      </a>
-    </li>
-    <li class="nav-item" style="margin-top: 20px">
-      <a
-        class="nav-link"
-        data-toggle="collapse"
         href="#ui-basic"
         aria-expanded="false"
         aria-controls="ui-basic"
@@ -26,7 +14,7 @@
       </a>
       <div class="collapse" id="ui-basic">
         <ul style="list-style-type: none; padding: 0; margin: 0">
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="isAllowed('Admin') == true">
             <a
               class="nav-link"
               [routerLink]="['utilisateurs']"
@@ -34,7 +22,15 @@
               >Utilisateurs</a
             >
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="isAllowed('Admin') == true">
+            <a
+              class="nav-link"
+              [routerLink]="['role']"
+              routerLinkActive="active"
+              >Roles</a
+            >
+          </li>
+          <li class="nav-item" *ngIf="isAllowed('Admin') == true">
             <a
               class="nav-link"
               [routerLink]="['fournisseurs']"
@@ -43,7 +39,7 @@
               Fournisseurs</a
             >
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="isAllowed('Admin') == true">
             <a
               class="nav-link"
               [routerLink]="['articles']"
@@ -51,7 +47,7 @@
               >Articles</a
             >
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="isAllowed('Admin') == true">
             <a
               class="nav-link"
               [routerLink]="['typeRetard']"
@@ -60,12 +56,29 @@
             >
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="isAllowed('Admin') == true">
             <a
               class="nav-link"
               [routerLink]="['ContratDashboard']"
               routerLinkActive="active"
               >Contrats</a
+            >
+          </li>
+
+          <li class="nav-item" *ngIf="isAllowed('Chef d’escale') == true">
+            <a
+              class="nav-link"
+              [routerLink]="['affichageVol']"
+              routerLinkActive="active"
+              >Vols</a
+            >
+          </li>
+          <li class="nav-item" *ngIf="isAllowed('Chef d escale') == true">
+            <a
+              class="nav-link"
+              [routerLink]="['dashboardRetard']"
+              routerLinkActive="active"
+              >Retard</a
             >
           </li>
         </ul>

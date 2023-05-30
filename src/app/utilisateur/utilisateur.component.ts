@@ -1,8 +1,10 @@
+import { RoleService } from './../Services/role.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Utilisateur } from './utilisateur';
+import { Utilisateur } from '../Entities/utilisateur';
 import { UtilisateurService } from '../Services/utilisateur.service';
+import { Role } from '../Entities/role';
 @Component({
   selector: 'app-utilisateur',
   templateUrl: './utilisateur.component.html',
@@ -12,19 +14,22 @@ export class UtilisateurComponent implements OnInit {
   public utilisateurs: Utilisateur[];
   public editUtilisateur: Utilisateur | null;
   public deleteUtilisateur: Utilisateur | null;
+  public roles: Role[];
   addForm: FormGroup;
   constructor(
+    private RoleService: RoleService,
     private UtilisateurService: UtilisateurService,
     private fb: FormBuilder
   ) {}
 
   ngOnInit() {
+    this.getAllRoles();
     this.getAllUsers();
     this.addForm = this.fb.group({
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       statutCompte: [''],
-      role: ['', [Validators.required]],
+      role: [null, [Validators.required]],
 
       motPasse: ['', [Validators.required]],
       email: [
@@ -44,12 +49,23 @@ export class UtilisateurComponent implements OnInit {
       }
     );
   }
-
+  public getAllRoles(): void {
+    this.RoleService.getAllRole().subscribe(
+      (response: Role[]) => {
+        this.roles = response;
+        console.log(response);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
   // add user to the database function
   public onAdd(addForm: FormGroup): void {
     this.UtilisateurService.createUser(addForm.value).subscribe(
       (response: Utilisateur) => {
-        console.log(response);
+        const exit = document.getElementById('exit');
+        exit?.click();
         this.getAllUsers();
         addForm.reset();
       },
