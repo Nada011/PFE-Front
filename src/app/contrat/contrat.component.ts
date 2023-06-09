@@ -140,10 +140,11 @@ export class ContratComponent implements OnInit {
   }
 
   public onAdd(addForm: FormGroup): void {
-    console.log(addForm.value);
+    console.log('addd', addForm.value);
     this.ContratService.createContrat(addForm.value).subscribe(
       (response: Contrat) => {
         this.getAllContrats();
+
         this.listArticle = [];
         addForm.reset();
         sessionStorage.setItem('contrat', JSON.stringify(response));

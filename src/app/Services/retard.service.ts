@@ -21,4 +21,8 @@ export class RetardService {
   public createRetard(Retard: addRetardRequest): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/Retard/add`, Retard);
   }
+  //Put
+  public updateValidite(bon: any): Observable<any> {
+    return this.http.put<any>(`${this.apiServerUrl}/Retard/bon/update`, bon);
+  }
 }

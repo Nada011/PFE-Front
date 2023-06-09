@@ -180,7 +180,19 @@
         </div>
       </div>
       <h4 class="card-title">UTILISATEURS</h4>
-
+      <div
+        class="input-group"
+        style="width: 350px; margin-left: 30%; margin-bottom: 20px"
+      >
+        <input
+          type="text"
+          class="form-control"
+          #x
+          (keyup)="setFilterText(x.value)"
+          placeholder="Rechecher par Nom..."
+          aria-label="Recipient's username"
+        />
+      </div>
       <div class="table-responsive">
         <table class="table">
           <thead>
@@ -188,19 +200,17 @@
               <th>Nom</th>
               <th>Prenom</th>
               <th>Email</th>
-              <th>Mot de passe</th>
               <th>Role</th>
               <th>Statut</th>
               <th style="padding-left: 10px">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let utilisateur of utilisateurs">
+            <tr *ngFor="let utilisateur of filtredUser">
               <td>{{ utilisateur?.nom }}</td>
               <td>{{ utilisateur?.prenom }}</td>
               <td>{{ utilisateur?.email }}</td>
-              <td>{{ utilisateur?.motPasse }}</td>
-              <td>{{ utilisateur?.role }}</td>
+              <td>{{ utilisateur?.role.roleName }}</td>
               <td>
                 <label
                   *ngIf="utilisateur?.statutCompte === true"
@@ -259,6 +269,7 @@
                                 type="text"
                                 class="form-control"
                                 placeholder="{{ editUtilisateur?.nom }}"
+                                required="true"
                               />
                             </div>
                             <input
@@ -285,6 +296,7 @@
                                 ngModel="{{ editUtilisateur?.prenom }}"
                                 name="prenom"
                                 type="text"
+                                required="true"
                                 class="form-control"
                                 placeholder="{{ editUtilisateur?.prenom }}"
                               />
@@ -302,6 +314,7 @@
                                 name="email"
                                 type="text"
                                 class="form-control"
+                                readonly
                                 placeholder="{{ editUtilisateur?.email }}"
                               />
                             </div>
@@ -331,15 +344,13 @@
                             <div class="col-sm-9">
                               <select
                                 class="form-control"
-                                ngModel="{{ editUtilisateur?.role }}"
-                                name="role"
+                                ngModelGroup="role"
+                                name="roleName"
+                                [ngModel]="editUtilisateur?.role?.roleName"
                               >
-                                <option disabled value="">
-                                  {{ editUtilisateur?.role?.roleName }}
-                                </option>
                                 <option
                                   *ngFor="let role of roles"
-                                  [ngValue]="role"
+                                  [value]="role?.roleName"
                                 >
                                   {{ role.roleName }}
                                 </option>

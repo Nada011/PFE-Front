@@ -1,1 +1,53 @@
-<p>bon-prestation works!</p>
+<div id="printableArea">
+  <blockquote class="blockquote" style="width: 950px">
+    <div class="card-body">
+      <img
+        src="../../assets/images/logoTn.png"
+        style="width: 150px"
+        alt="logo"
+      />
+
+      <p class="card-description">Compagnie aerienne TUNISAIR</p>
+      <h4 style="text-align: center" class="card-title">
+        Bon de prise en charge
+      </h4>
+      <br />
+      <div class="row">
+        <div class="col-md-6">
+          <address>
+            <p class="font-weight-bold">Vol_{{ retard.vl }}</p>
+            <p>Origine_{{ retard.origine }}</p>
+            <p>Destination_{{ retard.destination }}</p>
+            <p>Type_Retard_{{ retard.typeRetard.type }}</p>
+          </address>
+        </div>
+        <div class="col-md-6">
+          <address class="text-primary">
+            <p class="font-weight-bold">PAX</p>
+            <p class="mb-2">{{ bon.nomPassger }}</p>
+          </address>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <h4 class="card-title">Menu:{{ bon.contrat.menu.titre }}</h4>
+      <hr />
+      <ul>
+        <li *ngFor="let article of bon.contrat?.menu.details">
+          {{ article.nomArticleFr }} - {{ article.nomArticleEn }} -
+          {{ article.nomArticleAr }}
+        </li>
+      </ul>
+    </div>
+  </blockquote>
+</div>
+
+<button
+  type="button"
+  style="width: 55px"
+  class="btn btn-danger btn-rounded btn-icon"
+  id="add-Floating-button"
+>
+  <i style="width: 50px" class="mdi mdi-printer"></i>
+</button>

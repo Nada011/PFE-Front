@@ -94,7 +94,6 @@ export class MenuDetailComponent implements OnInit {
     this.ArticleService.getAllArticles().subscribe(
       (response: Article[]) => {
         this.Articles = response;
-        console.log(this.Articles);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -111,14 +110,9 @@ export class MenuDetailComponent implements OnInit {
     this.listArticle.splice(i, 1);
   }
   public onAdd(addForm: FormGroup): void {
-    console.log('*********');
-    console.log(this.addForm.controls['details'].value);
-    console.log(this.details.value);
-    console.log('*********');
     let formValue = this.addForm.controls['details'].value;
     this.MenuDetailService.createDetailMenu(formValue).subscribe(
       (response: MenuDetail[]) => {
-        console.log(response);
         this.listArticle = [];
         addForm.reset();
         this.router.navigate(['AdminDashboard/ContratDashboard']);

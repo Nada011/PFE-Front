@@ -18,7 +18,9 @@ export class ContratDashboardComponent implements OnInit {
   public deleteContrat: any;
   public Contratt: Contrat | null;
   editForm: FormGroup;
-
+  public Contrat: any;
+  filtredContrats: any[];
+  filterText: String = '';
   constructor(
     //private MenuService: MenuService,
     // private MenuDetailService: MenuDetailService,
@@ -57,12 +59,31 @@ export class ContratDashboardComponent implements OnInit {
       this.router.navigate(['AdminDashboard/updateContrat']);
     }
   }
+  //set filter text
+  setFilterText(value: String) {
+    this.filterText = value;
+    this.filtredContrats = this.filter(value);
+  }
+  ///filter
+  filter(fournisseurNom: String) {
+    if (this.contrats.length === 0 || this.filterText === '') {
+      return this.contrats;
+    } else {
+      return this.contrats.filter((Contrat) => {
+        return Contrat.fournisseurNom
+          .toLowerCase()
+          .match(fournisseurNom.toLowerCase());
+      });
+    }
+  }
+  setContrats(value: any) {
+    this.Contrat = value;
+  }
   // GET FOURNISSEURS
   public getAllFournisseurs(): void {
     this.FournisseurService.getAllFournisseurs().subscribe(
       (response: Fournisseur[]) => {
         this.Fournisseurs = response;
-        console.log(this.Fournisseurs);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -74,7 +95,8 @@ export class ContratDashboardComponent implements OnInit {
     this.ContratService.getAllContrats().subscribe(
       (response: Contrat[]) => {
         this.contrats = response;
-        console.log(this.contrats);
+
+        this.filtredContrats = this.contrats;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -85,7 +107,6 @@ export class ContratDashboardComponent implements OnInit {
   public onDelete(Id: number): void {
     this.ContratService.deleteContrat(Id).subscribe(
       (response: void) => {
-        console.log(response);
         this.getAllContrats();
       },
       (error: HttpErrorResponse) => {
@@ -97,12 +118,10 @@ export class ContratDashboardComponent implements OnInit {
   public onEdit(contrat: Contrat): void {
     this.ContratService.updateContrat(contrat).subscribe(
       (response: Contrat) => {
-        console.log(response);
         this.getAllContrats();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
-        console.log(contrat);
       }
     );
   }

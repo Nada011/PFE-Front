@@ -61,13 +61,12 @@
             <thead>
               <tr>
                 <th></th>
-                <th style="padding-left: 20%">Actions</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tr *ngFor="let role of Roles">
               <td>{{ role?.roleName }}</td>
-              <td>{{ role?.roleDescription }}</td>
-              <td style="padding-left: 18%">
+              <td>
                 <button
                   type="button"
                   (click)="onOpenModal(role, 'delete')"

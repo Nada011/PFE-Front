@@ -1,6 +1,6 @@
+import { Article } from './../Entities/article';
 import { ArticleService } from '../Services/article.service';
 import { Component, OnInit } from '@angular/core';
-import { Article } from '../Entities/article';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -14,6 +14,9 @@ export class ArticleComponent implements OnInit {
   public editArticle: Article | null;
   public deleteArticle: Article | null;
   addForm: FormGroup;
+  public article: any;
+  FiltredArticles: any[];
+  filterText: String = '';
   constructor(
     private ArticleService: ArticleService,
     private fb: FormBuilder
@@ -29,11 +32,30 @@ export class ArticleComponent implements OnInit {
     });
     this.addForm.valueChanges.subscribe;
   }
+  //set filter text
+  setFilterText(value: String) {
+    this.filterText = value;
+    this.FiltredArticles = this.filter(value);
+  }
+  ///filter
+  filter(Nom: String) {
+    if (this.articles.length === 0 || this.filterText === '') {
+      return this.articles;
+    } else {
+      return this.articles.filter((article) => {
+        return article.nomArticleFr.toLowerCase().match(Nom.toLowerCase());
+      });
+    }
+  }
+  setArticle(value: any) {
+    this.article = value;
+  }
   public getAllArticles(): void {
     this.ArticleService.getAllArticles().subscribe(
       (response: Article[]) => {
         this.articles = response;
-        console.log(this.articles);
+
+        this.FiltredArticles = this.articles;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -43,7 +65,7 @@ export class ArticleComponent implements OnInit {
 
   public onAdd(addForm: FormGroup): void {
     this.ArticleService.createArticle(addForm.value).subscribe(
-      (response: Article) => {
+      (_response: Article) => {
         const exit = document.getElementById('exit');
         exit?.click();
         this.getAllArticles();
@@ -59,7 +81,6 @@ export class ArticleComponent implements OnInit {
   public onEdit(article: Article): void {
     this.ArticleService.updateArticle(article).subscribe(
       (response: Article) => {
-        console.log(response);
         this.getAllArticles();
       },
       (error: HttpErrorResponse) => {
@@ -70,7 +91,6 @@ export class ArticleComponent implements OnInit {
   public onDelete(Id: number): void {
     this.ArticleService.deleteArticle(Id).subscribe(
       (response: void) => {
-        console.log(response);
         this.getAllArticles();
       },
       (error: HttpErrorResponse) => {

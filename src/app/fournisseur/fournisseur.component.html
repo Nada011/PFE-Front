@@ -255,7 +255,19 @@
         </div>
       </div>
       <h4 class="card-title">FOURNISSEURS</h4>
-
+      <div
+        class="input-group"
+        style="width: 350px; margin-left: 30%; margin-bottom: 20px"
+      >
+        <input
+          type="text"
+          class="form-control"
+          #x
+          (keyup)="setFilterText(x.value)"
+          placeholder="Rechecher par Nom..."
+          aria-label="Recipient's username"
+        />
+      </div>
       <div class="table-responsive">
         <table class="table">
           <thead>
@@ -271,7 +283,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let fournisseur of fournisseurs">
+            <tr *ngFor="let fournisseur of FiltredFournisseurs">
               <td>{{ fournisseur.nom }}</td>
               <td>{{ fournisseur.email }}</td>
               <td>{{ fournisseur.numTel }}</td>
@@ -308,7 +320,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <h4 class="card-title">Modifier utilisateur</h4>
+                        <h4 class="card-title">Modifier fournisseur</h4>
                         <form #editForm="ngForm">
                           <div class="form-group row">
                             <label
@@ -496,9 +508,8 @@
                       </div>
                       <div class="modal-body">
                         <p>
-                          êtes-vous sûr de vouloir supprimer le fournisseur{{
-                            deleteFournisseur?.nom
-                          }}?
+                          êtes-vous sûr de vouloir supprimer le fournisseur
+                          {{ deleteFournisseur?.nom }}?
                         </p>
                         <div class="modal-footer">
                           <button

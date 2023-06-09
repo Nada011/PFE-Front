@@ -23,7 +23,9 @@ export class FournisseurComponent implements OnInit {
   public editFournisseur: Fournisseur | null;
   public deleteFournisseur: Fournisseur | null;
   public fournisseurr: any;
-
+  public fournisseur: any;
+  FiltredFournisseurs: any[];
+  filterText: String = '';
   addForm: FormGroup;
   deleteContrat: any;
   contrats: Contrat[];
@@ -50,11 +52,27 @@ export class FournisseurComponent implements OnInit {
       ],
     });
   }
-
+  //set filter text
+  setFilterText(value: String) {
+    this.filterText = value;
+    this.FiltredFournisseurs = this.filter(value);
+  }
+  ///filter
+  filter(Nom: String) {
+    if (this.fournisseurs.length === 0 || this.filterText === '') {
+      return this.fournisseurs;
+    } else {
+      return this.fournisseurs.filter((utilisateur) => {
+        return utilisateur.nom.toLowerCase().match(Nom.toLowerCase());
+      });
+    }
+  }
+  setFournisseur(value: any) {
+    this.fournisseur = value;
+  }
   public onDeleteContrat(Id: number): void {
     this.ContratService.deleteContrat(Id).subscribe(
       (response: void) => {
-        console.log(response);
         this.getAllContrats();
       },
       (error: HttpErrorResponse) => {
@@ -66,7 +84,6 @@ export class FournisseurComponent implements OnInit {
     this.ContratService.getAllContrats().subscribe(
       (response: Contrat[]) => {
         this.contrats = response;
-        console.log(this.contrats);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -77,7 +94,8 @@ export class FournisseurComponent implements OnInit {
     this.FournisseurService.getAllFournisseurs().subscribe(
       (response: Fournisseur[]) => {
         this.fournisseurs = response;
-        console.log(this.fournisseurs);
+
+        this.FiltredFournisseurs = this.fournisseurs;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -87,7 +105,6 @@ export class FournisseurComponent implements OnInit {
   public onAdd(addForm: FormGroup): void {
     this.FournisseurService.createFournisseur(addForm.value).subscribe(
       (response: Fournisseur) => {
-        console.log(response);
         const exit = document.getElementById('exit');
         exit?.click();
         this.getAllFournisseurs();
@@ -103,7 +120,6 @@ export class FournisseurComponent implements OnInit {
   public onEdit(Fournisseur: Fournisseur): void {
     this.FournisseurService.updateFournisseur(Fournisseur).subscribe(
       (response: Fournisseur) => {
-        console.log(response);
         this.getAllFournisseurs();
       },
       (error: HttpErrorResponse) => {
@@ -128,7 +144,6 @@ export class FournisseurComponent implements OnInit {
   public onDelete(Id: number): void {
     this.FournisseurService.deleteFournisseur(Id).subscribe(
       (response: void) => {
-        console.log(response);
         this.getAllFournisseurs();
       },
       (error: HttpErrorResponse) => {

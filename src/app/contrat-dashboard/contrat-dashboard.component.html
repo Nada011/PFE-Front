@@ -12,6 +12,19 @@
         </button>
       </div>
       <h4 class="card-title">CONTRATS</h4>
+      <div
+        class="input-group"
+        style="width: 350px; margin-left: 30%; margin-bottom: 20px"
+      >
+        <input
+          type="text"
+          class="form-control"
+          #x
+          (keyup)="setFilterText(x.value)"
+          placeholder="Rechecher par Nom de fournisseur..."
+          aria-label="Recipient's username"
+        />
+      </div>
       <div class="table-responsive">
         <table class="table">
           <thead>
@@ -25,7 +38,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let contrat of contrats">
+            <tr *ngFor="let contrat of filtredContrats">
               <td>{{ contrat?.id }}</td>
               <td>{{ contrat?.dateDebut }}</td>
               <td>{{ contrat?.dateFin }}</td>

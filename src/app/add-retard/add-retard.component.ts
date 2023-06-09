@@ -53,7 +53,6 @@ export class AddRetardComponent implements OnInit {
     this.TypeRetardService.getAllTypeRetards().subscribe(
       (response: TypeRetard[]) => {
         this.typeRetard = response;
-        console.log(this.typeRetard);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -100,7 +99,6 @@ export class AddRetardComponent implements OnInit {
     console.log('contrat:---', addForm.value, 'value');
     this.RetardService.createRetard(addForm.value).subscribe(
       (response: Retard) => {
-        console.log(response);
         addForm.reset();
         this.router.navigate(['/affichageVol']);
       },
@@ -118,7 +116,6 @@ export class AddRetardComponent implements OnInit {
       (response: Contrat[]) => {
         this.contrats = response;
         this.filtredContrats = this.contrats;
-        console.log(this.contrats);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

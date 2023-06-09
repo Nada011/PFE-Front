@@ -26,7 +26,6 @@ import { AuthGuard } from './Auth/auth.guard';
 import { AuthInterceptor } from './Auth/auth.iterceptor';
 import { ProfilComponent } from './profil/profil.component';
 import { RoleComponent } from './role/role.component';
-import { NgxPrintModule } from 'ngx-print';
 import { BonPrestationComponent } from './bon-prestation/bon-prestation.component';
 
 @NgModule({
@@ -59,7 +58,6 @@ import { BonPrestationComponent } from './bon-prestation/bon-prestation.componen
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxPrintModule,
   ],
   providers: [
     AuthGuard,

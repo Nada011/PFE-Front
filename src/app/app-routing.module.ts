@@ -60,7 +60,12 @@ const routes: Routes = [
   {
     path: 'dashboardRetard',
     component: DashboardRetardComponent,
-    children: [{ path: 'bonPrestation', component: BonPrestationComponent }],
+    canActivate: [AuthGuard],
+    data: { role: ['Agent de comptoir'] },
+  },
+  {
+    path: 'bonPrestation',
+    component: BonPrestationComponent,
     canActivate: [AuthGuard],
     data: { role: ['Agent de comptoir'] },
   },

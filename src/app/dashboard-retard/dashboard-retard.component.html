@@ -1,4 +1,5 @@
 <app-nav-bar></app-nav-bar>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <div class="container-fluid page-body-wrapper">
   <app-side-bar></app-side-bar>
   <div class="main-panel">
@@ -10,6 +11,40 @@
             <div class="card-body">
               <div></div>
               <h4 class="card-title">VOLS EN RETARD</h4>
+              <div class="input-group" style="margin-bottom: 50px">
+                <input
+                  type="text"
+                  class="form-control"
+                  #vol
+                  (keyup)="setFilter(vol.value, '', '', '')"
+                  placeholder="Vol..."
+                  aria-label="Recipient's username"
+                />
+                <input
+                  type="text"
+                  class="form-control"
+                  #origine
+                  (keyup)="setFilter('', origine.value, '', '')"
+                  placeholder="Origine..."
+                  aria-label="Recipient's username"
+                />
+
+                <input
+                  type="text"
+                  class="form-control"
+                  #destination
+                  (keyup)="setFilter('', '', destination.value, '')"
+                  placeholder="destination..."
+                  aria-label="Recipient's username"
+                />
+                <input
+                  type="date"
+                  class="form-control"
+                  #date
+                  (mouseleave)="setFilter('', '', '', date.value)"
+                  aria-label="Recipient's username"
+                />
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead>
@@ -24,7 +59,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let retard of Retards">
+                    <tr *ngFor="let retard of FiltredRetard">
                       <td>{{ retard?.dateDeclanchement }}</td>
                       <td>{{ retard?.typeRetard.type }}</td>
                       <td>{{ retard?.cie }}</td>
@@ -55,11 +90,12 @@
                           >
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title">BON PRESTATION</h5>
+                                <h5 class="modal-title">VERIFIER PASSAGER</h5>
 
                                 <button
                                   type="button"
                                   class="close"
+                                  id="Quitter"
                                   data-dismiss="modal"
                                   aria-label="Close"
                                 >
@@ -67,32 +103,68 @@
                                 </button>
                               </div>
                               <div class="modal-body">
+                                <div class="input-group">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="inputScan"
+                                    #x
+                                    (keyup)="setFilterText(x.value)"
+                                    placeholder="Code..."
+                                    aria-label="Recipient's username"
+                                  />
+                                  <div class="input-group-append">
+                                    <button
+                                      class="btn btn-dark btn-fw"
+                                      type="button"
+                                      (click)="startScanner()"
+                                    >
+                                      <i class="mdi mdi-barcode-scan"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                                <div id="qr-reader">
+                                  <p></p>
+                                  <div
+                                    id="scanner"
+                                    style="width: 100%; height: auto"
+                                  ></div>
+
+                                  <div
+                                    id="qr-reader"
+                                    style="width: 500px"
+                                  ></div>
+                                  <div id="qr-reader-results"></div>
+                                </div>
+
                                 <div class="table-responsive">
                                   <table class="table">
                                     <tbody>
-                                      <h5>Passagers:</h5>
-                                      <tr
-                                        *ngFor="
-                                          let bon of Retard?.bonsPrestation
-                                        "
-                                      >
+                                      <tr *ngFor="let bon of filtredbon">
                                         <td>
                                           {{ bon.nomPassger }}
+                                        </td>
+                                        <td>
+                                          <label
+                                            *ngIf="bon?.valide === true"
+                                            id="statut"
+                                            class="badge badge-success"
+                                          >
+                                            bon activé</label
+                                          >
+                                          <label
+                                            *ngIf="bon?.valide === false"
+                                            class="badge btn-danger"
+                                          >
+                                            Bon désactivé</label
+                                          >
                                         </td>
                                       </tr>
                                       <tr></tr>
                                     </tbody>
                                   </table>
                                 </div>
-                                <div class="modal-footer">
-                                  <button
-                                    id="Quitter"
-                                    class="btn btn-danger"
-                                    data-dismiss="modal"
-                                  >
-                                    Quitter
-                                  </button>
-                                </div>
+                                <div class="modal-footer"></div>
                               </div>
                             </div>
                           </div>

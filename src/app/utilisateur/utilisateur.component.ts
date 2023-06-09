@@ -16,6 +16,10 @@ export class UtilisateurComponent implements OnInit {
   public deleteUtilisateur: Utilisateur | null;
   public roles: Role[];
   addForm: FormGroup;
+
+  public utilisateur: Utilisateur;
+  filtredUser: any[];
+  filterText: String = '';
   constructor(
     private RoleService: RoleService,
     private UtilisateurService: UtilisateurService,
@@ -25,6 +29,7 @@ export class UtilisateurComponent implements OnInit {
   ngOnInit() {
     this.getAllRoles();
     this.getAllUsers();
+
     this.addForm = this.fb.group({
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
@@ -38,11 +43,29 @@ export class UtilisateurComponent implements OnInit {
       ],
     });
   }
+  //set filter text
+  setFilterText(value: String) {
+    this.filterText = value;
+    this.filtredUser = this.filter(value);
+  }
+  ///filter
+  filter(Nom: String) {
+    if (this.utilisateurs.length === 0 || this.filterText === '') {
+      return this.utilisateurs;
+    } else {
+      return this.utilisateurs.filter((utilisateur) => {
+        return utilisateur.nom.toLowerCase().match(Nom.toLowerCase());
+      });
+    }
+  }
+  setUtilisateur(value: any) {
+    this.utilisateur = value;
+  }
   public getAllUsers(): void {
     this.UtilisateurService.getAllUsers().subscribe(
       (response: Utilisateur[]) => {
         this.utilisateurs = response;
-        console.log(this.utilisateurs);
+        this.filtredUser = this.utilisateurs;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -80,7 +103,6 @@ export class UtilisateurComponent implements OnInit {
   public onEdit(utilisateur: any): void {
     this.UtilisateurService.updateUsers(utilisateur).subscribe(
       (response: Utilisateur) => {
-        console.log(utilisateur);
         this.getAllUsers();
       },
       (error: HttpErrorResponse) => {
@@ -91,7 +113,6 @@ export class UtilisateurComponent implements OnInit {
   public onDelete(Id: number): void {
     this.UtilisateurService.deleteUser(Id).subscribe(
       (response: void) => {
-        console.log(response);
         this.getAllUsers();
       },
       (error: HttpErrorResponse) => {

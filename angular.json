@@ -18,6 +18,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -33,6 +34,8 @@
               "src/assets/js/off-canvas.js",
               "src/assets/js/hoverable-collapse.js",
               "src/assets/vendors/js/vendor.bundle.base.js"
+
+
             ]
           },
           "configurations": {
